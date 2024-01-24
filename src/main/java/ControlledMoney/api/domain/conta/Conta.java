@@ -19,7 +19,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.val;
 
 @Table(name = "contas")
 @Entity(name = "Conta")
@@ -33,6 +32,7 @@ public class Conta {
     
     public Conta(ContaInputDTO dados) {
         this.saldo = dados.saldo();
+        this.saldoPrevisto = 0d;
     }
 
     @Id
@@ -40,6 +40,8 @@ public class Conta {
     private Long id;
 
     private Double saldo;
+
+    private Double saldoPrevisto;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lucro> lucros;
@@ -61,6 +63,10 @@ public class Conta {
 
     public void sacar(Double valor){
         this.saldo -= valor;
+    }
+
+    public void definirSaldoPrevisto(Double gastoPrevisto, Double lucroPrevisto) {
+        this.saldoPrevisto = this.saldo + (lucroPrevisto - this.totalLucro) - (gastoPrevisto - this.totalGasto);
     }
     
     

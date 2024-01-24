@@ -5,6 +5,7 @@ import ControlledMoney.api.domain.conta.Conta;
 public record ContaOutputDTO(
     Long id, 
     Double saldo,
+    Double saldoPrevisto,
     Double totalLucro,
     Double totalGasto,
     Double previstoLucro,
@@ -12,7 +13,7 @@ public record ContaOutputDTO(
      ){
 
     public ContaOutputDTO(Conta conta){
-        this(conta.getId(), conta.getSaldo(), conta.getTotalLucro(), 
+        this(conta.getId(), conta.getSaldo(),conta.getSaldoPrevisto() ,conta.getTotalLucro(), 
         conta.getTotalGasto(), conta.getPrevistoLucro(), conta.getPrevistoGasto());
     }
 

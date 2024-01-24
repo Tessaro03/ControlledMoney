@@ -12,8 +12,6 @@ import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
 import ControlledMoney.api.repository.LucroRepository;
 
-
-
 @Service
 public class ContaService {
     
@@ -26,39 +24,13 @@ public class ContaService {
     @Autowired
     private GastoRepository gastoRepository;
 
-    public ContaOutputDTO dadosConta(Long id){
-        Conta conta = contaRepository.getReferenceById(id);
-        Double lucroTotal = lucroRepository.lucrosPagoIdConta(conta.getId());
-        Double lucroPrevisto = lucroRepository.lucrosPrevistoIdConta(conta.getId());
+    public ContaOutputDTO dadosConta(Long id, int mes, int ano) {
+        if (mes == 0 || ano == 0) {
+            LocalDate dataAtual = LocalDate.now();
+            mes = dataAtual.getMonthValue();
+            ano = dataAtual.getYear();
+        }
 
-        Double gastoTotal = gastoRepository.gastosPagoIdConta(conta.getId());
-        Double gastoPrevisto = gastoRepository.gastoPrevistoIdConta(conta.getId());
-
-        conta.setTotalGasto(gastoTotal);
-        conta.setPrevistoGasto(gastoPrevisto);
-        conta.setTotalLucro(lucroTotal);
-        conta.setPrevistoLucro(lucroPrevisto);
-        return new ContaOutputDTO(conta);
-    }
-
-    public ContaOutputDTO dadosContaPorMes(Long id) {
-        Conta conta = contaRepository.getReferenceById(id);
-        LocalDate dataAtual = LocalDate.now();
-        Double lucroTotal = lucroRepository.lucrosPagoIdContaPorMesEAno(conta.getId(), dataAtual.getMonthValue(), dataAtual.getYear());
-        Double lucroPrevisto = lucroRepository.lucrosPrevistoIdContaPorMesEAno(conta.getId(), dataAtual.getMonthValue(), dataAtual.getYear());
-
-        Double gastoTotal = gastoRepository.gastoPagoIdContaPorMesEAno(conta.getId(), dataAtual.getMonthValue(), dataAtual.getYear());
-        Double gastoPrevisto = gastoRepository.gastoPrevistoIdContaPorMesEAno(conta.getId(), dataAtual.getMonthValue(), dataAtual.getYear());
-
-
-        conta.setTotalGasto(gastoTotal);
-        conta.setPrevistoGasto(gastoPrevisto);
-        conta.setTotalLucro(lucroTotal);
-        conta.setPrevistoLucro(lucroPrevisto);
-        return new ContaOutputDTO(conta);
-    }
-    
-    public ContaOutputDTO dadosContaPorMesEAno(Long id, int mes, int ano) {
         Conta conta = contaRepository.getReferenceById(id);
         Double lucroTotal = lucroRepository.lucrosPagoIdContaPorMesEAno(conta.getId(), mes, ano);
         Double lucroPrevisto = lucroRepository.lucrosPrevistoIdContaPorMesEAno(conta.getId(), mes, ano);
@@ -66,11 +38,20 @@ public class ContaService {
         Double gastoTotal = gastoRepository.gastoPagoIdContaPorMesEAno(conta.getId(), mes, ano);
         Double gastoPrevisto = gastoRepository.gastoPrevistoIdContaPorMesEAno(conta.getId(), mes, ano);
 
+        if (lucroTotal == null) { lucroTotal = 0d;}
+        if (lucroPrevisto == null) { lucroPrevisto = 0d;}
+        if (gastoPrevisto == null) { gastoPrevisto = 0d;}
+        if (gastoTotal == null) { gastoTotal = 0d;}
 
         conta.setTotalGasto(gastoTotal);
         conta.setPrevistoGasto(gastoPrevisto);
         conta.setTotalLucro(lucroTotal);
         conta.setPrevistoLucro(lucroPrevisto);
+        conta.definirSaldoPrevisto(gastoPrevisto, lucroPrevisto);
         return new ContaOutputDTO(conta);
     }
+
+    
+
+ 
 }                                                                              

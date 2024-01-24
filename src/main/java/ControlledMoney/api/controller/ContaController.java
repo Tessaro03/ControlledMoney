@@ -28,21 +28,14 @@ public class ContaController {
 
     @GetMapping("/{id}")
     public ResponseEntity verConta(@PathVariable Long id){
-        var conta = contaService.dadosConta(id);
-        return ResponseEntity.ok(conta);
-    }
-
-    
-    @GetMapping("/{id}/mes")
-    public ResponseEntity verContaTrintaDias(@PathVariable Long id){
-        var conta = contaService.dadosContaPorMes(id);
+        var conta = contaService.dadosConta(id, 0 ,0);
         return ResponseEntity.ok(conta);
     }
 
 
     @GetMapping("/{id}/mes/{mes}/ano/{ano}")
     public ResponseEntity verContaMesAno(@PathVariable Long id, @PathVariable int mes, @PathVariable int ano){
-        var conta = contaService.dadosContaPorMesEAno(id, mes, ano);
+        var conta = contaService.dadosConta(id, mes, ano);
         return ResponseEntity.ok(conta);
     }
 
