@@ -44,12 +44,14 @@ public class GastoService {
             var gasto = new Gasto(dados, conta);
             gastoRepository.save(gasto);
         }
+        adicionarGasto(dados);
     }
 
     public void adicionarGasto(GastoInputDTO dados){
-        var conta = contaRepository.getReferenceById(dados.idConta());        
+        var conta = contaRepository.getReferenceById(dados.idConta());      
         if (dados.pago()) {
             conta.sacar(dados.valor());
+            contaRepository.save(conta);
         }
     }
 

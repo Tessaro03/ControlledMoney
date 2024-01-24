@@ -14,7 +14,6 @@ import ControlledMoney.api.domain.gasto.Gasto;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoOutputDTO;
 import ControlledMoney.api.domain.gasto.service.GastoService;
-import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
 
 @RestController
@@ -23,9 +22,6 @@ public class GastoController {
     
     @Autowired
     private GastoRepository gastoRepository;
-
-    @Autowired
-    private ContaRepository contaRepository;
 
     @Autowired
     private GastoService gastoService;

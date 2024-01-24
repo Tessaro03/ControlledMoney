@@ -16,7 +16,7 @@ public record LucroInputDTO(
     String motivo,
 
     @NotNull
-    Long valor,
+    Double valor,
     
     @NotBlank
     Boolean recebido,

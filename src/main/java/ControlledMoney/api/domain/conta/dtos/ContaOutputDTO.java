@@ -4,11 +4,11 @@ import ControlledMoney.api.domain.conta.Conta;
 
 public record ContaOutputDTO(
     Long id, 
-    Long saldo,
-    Long totalLucro,
-    Long totalGasto,
-    Long previstoLucro,
-    Long previstoGasto
+    Double saldo,
+    Double totalLucro,
+    Double totalGasto,
+    Double previstoLucro,
+    Double previstoGasto
      ){
 
     public ContaOutputDTO(Conta conta){

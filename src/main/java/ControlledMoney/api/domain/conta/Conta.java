@@ -39,7 +39,7 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long saldo;
+    private Double saldo;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Lucro> lucros;
@@ -47,19 +47,19 @@ public class Conta {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Gasto> gastos;
 
-    private Long totalLucro;
+    private Double totalLucro;
 
-    private Long totalGasto;
+    private Double totalGasto;
 
-    private Long previstoLucro;
+    private Double previstoLucro;
 
-    private Long previstoGasto;
+    private Double previstoGasto;
 
-    public void depositar(Long valor){
+    public void depositar(Double valor){
         this.saldo += valor;
     }
 
-    public void sacar(Long valor){
+    public void sacar(Double valor){
         this.saldo -= valor;
     }
     

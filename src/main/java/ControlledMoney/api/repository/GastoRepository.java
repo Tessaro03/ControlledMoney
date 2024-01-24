@@ -8,16 +8,16 @@ import ControlledMoney.api.domain.gasto.Gasto;
 public interface GastoRepository  extends JpaRepository<Gasto, Long>{
 
     @Query("SELECT SUM(g.valor) FROM Gasto g WHERE g.conta.id = :idConta AND g.pago = true")
-    Long gastosPagoIdConta(Long idConta);
+    Double gastosPagoIdConta(Long idConta);
 
     @Query("SELECT SUM(g.valor) FROM Gasto g WHERE g.conta.id = :idConta AND g.pago = true AND MONTH(g.data) = :mes AND YEAR(g.data) = :ano")
-    Long gastoPagoIdContaPorMesEAno(Long idConta, int mes, int ano);
+    Double gastoPagoIdContaPorMesEAno(Long idConta, int mes, int ano);
     
     @Query("SELECT SUM(g.valor) FROM Gasto g WHERE g.conta.id = :idConta" )
-    Long gastoPrevistoIdConta(Long idConta);
+    Double gastoPrevistoIdConta(Long idConta);
 
     @Query("SELECT SUM(g.valor) FROM Gasto g WHERE g.conta.id = :idConta AND MONTH(g.data) = :mes AND YEAR(g.data) = :ano" )
-    Long gastoPrevistoIdContaPorMesEAno(Long idConta, int mes, int ano);
+    Double gastoPrevistoIdContaPorMesEAno(Long idConta, int mes, int ano);
 
     
 }

@@ -8,7 +8,7 @@ public record ContaInputDTO(
     Long idUsuario,
 
     @NotNull
-    Long saldo
+    Double saldo
 ) 
 {
 

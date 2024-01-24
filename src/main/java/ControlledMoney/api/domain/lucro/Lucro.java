@@ -43,7 +43,7 @@ public class Lucro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String motivo;
-    private Long valor;
+    private Double valor;
     private Boolean recebido;
 
     private LocalDate data;

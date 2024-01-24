@@ -9,7 +9,7 @@ public record GastoOutputDTO(
     Long id,
     Long idConta, 
     String motivo,
-    Long valor,
+    Double valor,
     Boolean pago,
     LocalDate data,
     Long numeroParcela,

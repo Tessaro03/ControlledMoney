@@ -37,7 +37,7 @@ public class Parcela {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long valor;
+    private Double valor;
     private Long parcelas;
     private Boolean pago;
 

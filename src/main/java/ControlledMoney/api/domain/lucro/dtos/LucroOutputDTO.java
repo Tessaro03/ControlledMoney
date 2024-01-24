@@ -8,7 +8,7 @@ public record LucroOutputDTO(
     Long id,
     Long idConta, 
     String motivo,
-    Long valor,
+    Double valor,
     Boolean recebido,
     LocalDate data
 ) {

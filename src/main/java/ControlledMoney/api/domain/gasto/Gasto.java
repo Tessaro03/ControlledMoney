@@ -44,7 +44,7 @@ public class Gasto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String motivo;
-    private Long valor;
+    private Double valor;
     private Boolean pago;
     private LocalDate data;
     private Long numeroParcela;

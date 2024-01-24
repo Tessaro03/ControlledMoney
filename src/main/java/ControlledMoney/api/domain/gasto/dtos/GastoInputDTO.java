@@ -16,7 +16,7 @@ public record GastoInputDTO(
     String motivo,
     
     @NotNull
-    Long valor,
+    Double valor,
   
     @NotBlank
     Boolean pago,
