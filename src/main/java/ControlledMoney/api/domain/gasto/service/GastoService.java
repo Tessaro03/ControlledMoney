@@ -1,17 +1,13 @@
 package ControlledMoney.api.domain.gasto.service;
 
-import java.time.LocalDate;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ControlledMoney.api.domain.gasto.Gasto;
-import ControlledMoney.api.domain.gasto.Parcela;
+import ControlledMoney.api.domain.gasto.dtos.GastoAlterarDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
-
 import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
-import ControlledMoney.api.repository.ParcelaRepository;
 
 @Service
 public class GastoService {
@@ -22,28 +18,10 @@ public class GastoService {
     @Autowired
     private ContaRepository contaRepository;
 
-    @Autowired
-    private ParcelaRepository parcelaRepository;
-
     public void criarGasto(GastoInputDTO dados){
         var conta = contaRepository.getReferenceById(dados.idConta());        
-        if (dados.parcelas() != null) {
-            var parcela = new Parcela(dados);
-            parcela.setValor(dados.parcelas() * dados.valor());
-            parcelaRepository.save(parcela); 
-
-            for (Long i = 1l; i <= dados.parcelas() ; i++){
-                var gasto = new Gasto(dados, conta);
-                                
-                gasto.setParcela(parcela);
-                gasto.setNumeroParcela(i);
-                gasto.setData(dados.data().plusMonths(i));
-                gastoRepository.save(gasto);
-            }
-        } else {
-            var gasto = new Gasto(dados, conta);
-            gastoRepository.save(gasto);
-        }
+        var gasto = new Gasto(dados, conta);
+        gastoRepository.save(gasto);
         adicionarGasto(dados);
     }
 
@@ -53,6 +31,35 @@ public class GastoService {
             conta.sacar(dados.valor());
             contaRepository.save(conta);
         }
+    }
+
+    public void alterarGasto(GastoAlterarDTO dados) {
+        var gasto = gastoRepository.getReferenceById(dados.idGasto());
+
+        if (dados.valor() != null) {gasto.setValor(dados.valor());}
+        if (dados.data() != null) { gasto.setData(dados.data());}
+        if (dados.motivo() != null) { gasto.setMotivo(dados.motivo());}
+        
+        if (dados.pago() != null) { 
+            gasto.setPago(dados.pago());
+            var conta = contaRepository.getReferenceById(gasto.getConta().getId());
+            if (gasto.getPago() ) {
+                conta.sacar(gasto.getValor());
+            } else {
+                conta.depositar(gasto.getValor());
+            }
+        }   
+        gastoRepository.save(gasto);
+    }
+
+    public void deletarGasto(Long id) {
+        var gasto = gastoRepository.getReferenceById(id);
+        var conta = contaRepository.getReferenceById(gasto.getConta().getId());
+
+        if (gasto.getPago()) {
+            conta.depositar(gasto.getValor());
+        }
+        gastoRepository.delete(gasto);
     }
 
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import ControlledMoney.api.domain.conta.Conta;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
+import ControlledMoney.api.domain.parcela.Parcela;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

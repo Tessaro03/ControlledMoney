@@ -4,26 +4,19 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record GastoInputDTO(
-   
-    @NotNull
-    Long idConta,
+public record GastoAlterarDTO(
 
-    @NotBlank
-    String motivo,
-    
     @NotNull
+    Long idGasto,
     Double valor,
-  
-    @NotNull
     Boolean pago,
-
     @JsonFormat(pattern = "dd/MM/yyyy")
-    LocalDate data
+    LocalDate data,
+    String motivo
 
 ) {
+
 
 }

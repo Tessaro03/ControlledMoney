@@ -3,7 +3,7 @@ package ControlledMoney.api.domain.gasto.dtos;
 import java.time.LocalDate;
 
 import ControlledMoney.api.domain.gasto.Gasto;
-import ControlledMoney.api.domain.gasto.Parcela;
+import ControlledMoney.api.domain.parcela.Parcela;
 
 public record GastoOutputDTO(
     Long id,

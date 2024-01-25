@@ -1,16 +1,15 @@
-package ControlledMoney.api.domain.gasto;
+package ControlledMoney.api.domain.parcela;
 
-import java.util.List;
+
+import java.time.LocalDate;
 
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
-import jakarta.persistence.CascadeType;
+import ControlledMoney.api.domain.parcela.dtos.ParcelaInputDTO;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,9 +28,11 @@ import lombok.ToString;
 @Setter
 public class Parcela {
 
-    public Parcela(GastoInputDTO dados ) {
+    public Parcela(ParcelaInputDTO dados ) {
         this.parcelas = dados.parcelas();
         this.pago = dados.pago();
+        this.valor = dados.valor();
+        
     }
 
     @Id
@@ -40,6 +41,4 @@ public class Parcela {
     private Double valor;
     private Long parcelas;
     private Boolean pago;
-
-
 }
