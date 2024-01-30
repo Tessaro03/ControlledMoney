@@ -18,6 +18,7 @@ import ControlledMoney.api.domain.lucro.dtos.LucroAlterarDTO;
 import ControlledMoney.api.domain.lucro.dtos.LucroInputDTO;
 import ControlledMoney.api.domain.lucro.dtos.LucroOutputDTO;
 import ControlledMoney.api.domain.lucro.service.LucroService;
+import ControlledMoney.api.domain.lucro.validacao.LucroValidador;
 import ControlledMoney.api.repository.LucroRepository;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -31,6 +32,11 @@ public class LucroController {
 
     @Autowired 
     private LucroService service;
+
+    @Autowired
+    private LucroValidador validador;
+
+
 
     @GetMapping
     @Transactional
@@ -46,6 +52,7 @@ public class LucroController {
 
     @PatchMapping
     public void alterarLucro(@RequestBody @Valid LucroAlterarDTO dados){
+        validador.validarPath(dados);
         service.alterarLucro(dados);
     }
 

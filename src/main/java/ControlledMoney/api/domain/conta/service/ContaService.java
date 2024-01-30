@@ -11,6 +11,8 @@ import ControlledMoney.api.domain.conta.dtos.ContaOutputDTO;
 import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
 import ControlledMoney.api.repository.LucroRepository;
+import ControlledMoney.api.repository.ParcelaRepository;
+import jakarta.transaction.Transactional;
 
 @Service
 public class ContaService {
@@ -23,6 +25,10 @@ public class ContaService {
 
     @Autowired
     private GastoRepository gastoRepository;
+
+    @Autowired
+    private ParcelaRepository parcelaRepository;
+
 
     public ContaOutputDTO dadosConta(Long id, int mes, int ano) {
         if (mes == 0 || ano == 0) {
@@ -49,6 +55,14 @@ public class ContaService {
         conta.setPrevistoLucro(lucroPrevisto);
         conta.definirSaldoPrevisto(gastoPrevisto, lucroPrevisto);
         return new ContaOutputDTO(conta);
+    }
+
+    @Transactional
+    public void deletarConta(Long id) {
+        lucroRepository.deletarLucroIdConta(id);
+        parcelaRepository.deletarParcelaIdConta(id);
+        gastoRepository.deletarGastoIdConta(id);
+        contaRepository.deleteById(id);
     }
 
     

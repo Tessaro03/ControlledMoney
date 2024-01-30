@@ -3,13 +3,15 @@ package ControlledMoney.api.domain.parcela;
 
 import java.time.LocalDate;
 
+import ControlledMoney.api.domain.conta.Conta;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
 import ControlledMoney.api.domain.parcela.dtos.ParcelaInputDTO;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -41,4 +43,8 @@ public class Parcela {
     private Double valor;
     private Long parcelas;
     private Boolean pago;
+
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Conta conta;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import ControlledMoney.api.domain.conta.dtos.ContaInputDTO;
 import ControlledMoney.api.domain.gasto.Gasto;
 import ControlledMoney.api.domain.lucro.Lucro;
+import ControlledMoney.api.domain.parcela.Parcela;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -48,6 +49,9 @@ public class Conta {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Gasto> gastos;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Parcela> parcelas;
 
     private Double totalLucro;
 

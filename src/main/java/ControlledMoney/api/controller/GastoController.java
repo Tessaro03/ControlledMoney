@@ -18,6 +18,7 @@ import ControlledMoney.api.domain.gasto.dtos.GastoAlterarDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoOutputDTO;
 import ControlledMoney.api.domain.gasto.service.GastoService;
+import ControlledMoney.api.domain.gasto.validacao.GastoValidador;
 import ControlledMoney.api.repository.GastoRepository;
 import jakarta.validation.Valid;
 
@@ -30,6 +31,9 @@ public class GastoController {
 
     @Autowired
     private GastoService gastoService;
+
+    @Autowired
+    private GastoValidador validador;
 
     @GetMapping
     public ResponseEntity listarGastos(){
@@ -44,6 +48,7 @@ public class GastoController {
 
    @PatchMapping
    public void alterarGasto(@RequestBody @Valid GastoAlterarDTO dados){
+     validador.validadorPath(dados);
         gastoService.alterarGasto(dados);
    }
 

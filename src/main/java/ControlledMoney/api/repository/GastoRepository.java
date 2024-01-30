@@ -24,6 +24,10 @@ public interface GastoRepository  extends JpaRepository<Gasto, Long>{
     @Query("DELETE FROM Gasto g WHERE g.parcela.id = :id")
     void deletarGastoIdParcela(Long id);
 
+    @Modifying
+    @Query("DELETE FROM Gasto g WHERE g.conta.id = :id")
+    void deletarGastoIdConta(Long id);
+
     
 }
     
