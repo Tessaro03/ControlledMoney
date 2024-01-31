@@ -1,4 +1,4 @@
-package ControlledMoney.api.infra;
+package ControlledMoney.api.infra.Exceptions;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

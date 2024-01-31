@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ControlledMoney.api.domain.gasto.dtos.GastoAlterarDTO;
-import ControlledMoney.api.infra.ValidacaoException;
+import ControlledMoney.api.infra.Exceptions.ValidacaoException;
 import ControlledMoney.api.repository.GastoRepository;
 
 @Service

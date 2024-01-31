@@ -1,4 +1,4 @@
-package ControlledMoney.api.infra;
+package ControlledMoney.api.infra.Exceptions;
 
 public class ValidacaoException extends RuntimeException{
     
