@@ -1,4 +1,4 @@
-package ControlledMoney.api.domain.usuario.dtos;
+package ControlledMoney.api.domain.autenticacao.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 

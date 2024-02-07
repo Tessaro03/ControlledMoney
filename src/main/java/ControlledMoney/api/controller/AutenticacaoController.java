@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import ControlledMoney.api.domain.autenticacao.dtos.LoginInputDTO;
 import ControlledMoney.api.domain.usuario.Usuario;
-import ControlledMoney.api.domain.usuario.dtos.LoginInputDTO;
 import ControlledMoney.api.infra.token.TokenOutputDTO;
 import ControlledMoney.api.infra.token.TokenService;
 import jakarta.validation.Valid;

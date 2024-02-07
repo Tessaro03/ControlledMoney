@@ -26,10 +26,10 @@ public class TokenService {
         try{
             var algoritmo = Algorithm.HMAC256(secret); 
             return JWT.create() 
-            .withIssuer("API ControlledMoney") 
-            .withExpiresAt(dataExpiracao()) 
-            .withSubject(usuario.getLogin()) 
-            .sign(algoritmo); 
+                        .withIssuer("API ControlledMoney") 
+                        .withExpiresAt(dataExpiracao()) 
+                        .withSubject(usuario.getLogin()) 
+                        .sign(algoritmo); 
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Erro ao gerar Token", exception);
         }
@@ -40,16 +40,17 @@ public class TokenService {
     }   
 
     public String getSubject(String tokenJWT) {
-    try {
-        var algoritmo = Algorithm.HMAC256(secret);
-        return JWT.require(algoritmo)
-        .withIssuer("API ControlledMoney") 
-        .build()
-        .verify(tokenJWT)
-        .getSubject();
-    } catch (JWTVerificationException exception) {
-        throw new ValidacaoException("Token JWT inválido ou expirado!");
-    }
-}
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritmo)
+            .withIssuer("API ControlledMoney") 
+            .build()
+            .verify(tokenJWT)
+            .getSubject();
+        } catch (JWTVerificationException exception) {
+            throw new ValidacaoException("Token JWT inválido ou expirado!");
+        }
 
+    }
+ 
 }
