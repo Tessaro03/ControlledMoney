@@ -27,16 +27,16 @@ public class ContaController {
     private ContaService contaService;
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity verConta(@PathVariable  Long id){
-        var conta = contaService.dadosConta(id, 0 ,0);
+    @GetMapping
+    public ResponseEntity verConta(HttpServletRequest request){
+        var conta = contaService.dadosConta(request, 0 ,0);
         return ResponseEntity.ok(conta);
     }
 
 
-    @GetMapping("/{id}/mes/{mes}/ano/{ano}")
-    public ResponseEntity verContaMesAno(@PathVariable Long id, @PathVariable int mes, @PathVariable int ano){
-        var conta = contaService.dadosConta(id, mes, ano);
+    @GetMapping("/mes/{mes}/ano/{ano}")
+    public ResponseEntity verContaMesAno(HttpServletRequest request, @PathVariable int mes, @PathVariable int ano){
+        var conta = contaService.dadosConta(request, mes, ano);
         return ResponseEntity.ok(conta);
     }
 

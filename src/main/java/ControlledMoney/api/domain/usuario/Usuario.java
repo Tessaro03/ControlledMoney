@@ -16,7 +16,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -43,8 +45,9 @@ public class Usuario implements UserDetails {
     private String senha;
     private String nome;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Conta> contas;
+    @OneToOne
+    @JoinColumn(name = "conta_id")
+    private Conta conta;
 
     public Usuario(@Valid UsuarioInputDTO dados) {
         this.nome = dados.nome();

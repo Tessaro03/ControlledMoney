@@ -39,14 +39,16 @@ public class ContaService {
     @Autowired
     private TokenUsuario tokenUsuario;
 
-    public ContaOutputDTO dadosConta(Long id, int mes, int ano) {
+    public ContaOutputDTO dadosConta(HttpServletRequest request, int mes, int ano) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
         if (mes == 0 || ano == 0) {
             LocalDate dataAtual = LocalDate.now();
             mes = dataAtual.getMonthValue();
             ano = dataAtual.getYear();
         }
 
-        Conta conta = contaRepository.getReferenceById(id);
+        Conta conta = contaRepository.contaPorIdUsuario(usuario.getId());
         Double lucroTotal = lucroRepository.lucrosPagoIdContaPorMesEAno(conta.getId(), mes, ano);
         Double lucroPrevisto = lucroRepository.lucrosPrevistoIdContaPorMesEAno(conta.getId(), mes, ano);
 
