@@ -4,8 +4,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record ContaInputDTO(
     
-    @NotNull
-    Long idUsuario,
 
     @NotNull
     Double saldo

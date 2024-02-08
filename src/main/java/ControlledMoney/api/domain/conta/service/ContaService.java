@@ -67,7 +67,10 @@ public class ContaService {
     }
 
     @Transactional
-    public void deletarConta(Long id) {
+    public void deletarConta(HttpServletRequest request,Long id) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
+        contaValidacao.validarDelete(usuario, id);
         lucroRepository.deletarLucroIdConta(id);
         parcelaRepository.deletarParcelaIdConta(id);
         gastoRepository.deletarGastoIdConta(id);
@@ -77,8 +80,7 @@ public class ContaService {
     @Transactional
     public void criarConta(HttpServletRequest request, ContaInputDTO dados){
         var usuario = tokenUsuario.usuarioToken(request);
-        contaValidacao.validarPost(usuario, dados);
-        var conta = new Conta(dados);
+        var conta = new Conta(dados, usuario);
         contaRepository.save(conta);
     }
 

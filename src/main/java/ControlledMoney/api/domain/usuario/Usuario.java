@@ -8,11 +8,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import ControlledMoney.api.domain.conta.Conta;
 import ControlledMoney.api.domain.usuario.dtos.UsuarioInputDTO;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -38,6 +42,9 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
     private String nome;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Conta> contas;
 
     public Usuario(@Valid UsuarioInputDTO dados) {
         this.nome = dados.nome();

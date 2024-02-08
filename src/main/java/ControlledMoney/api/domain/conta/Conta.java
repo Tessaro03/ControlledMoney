@@ -6,12 +6,15 @@ import ControlledMoney.api.domain.conta.dtos.ContaInputDTO;
 import ControlledMoney.api.domain.gasto.Gasto;
 import ControlledMoney.api.domain.lucro.Lucro;
 import ControlledMoney.api.domain.parcela.Parcela;
+import ControlledMoney.api.domain.usuario.Usuario;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -31,14 +34,19 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 public class Conta {
     
-    public Conta(ContaInputDTO dados) {
+    public Conta(ContaInputDTO dados, Usuario usuario) {
         this.saldo = dados.saldo();
         this.saldoPrevisto = 0d;
+        this.usuario = usuario;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "conta_id")
+    private Usuario usuario;
 
     private Double saldo;
 

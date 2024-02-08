@@ -22,8 +22,6 @@ import jakarta.validation.Valid;
 @RequestMapping("/conta")
 public class ContaController {
     
-    @Autowired
-    private ContaRepository contaRepository;
 
     @Autowired
     private ContaService contaService;
@@ -49,9 +47,8 @@ public class ContaController {
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity deletarConta(@PathVariable Long id){
-        contaService.deletarConta(id);
-        
+    public ResponseEntity deletarConta(HttpServletRequest request,@PathVariable Long id){
+        contaService.deletarConta(request,id);
         return ResponseEntity.ok().build();
     }
 }
