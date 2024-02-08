@@ -15,6 +15,7 @@ import ControlledMoney.api.domain.conta.Conta;
 import ControlledMoney.api.domain.conta.dtos.ContaInputDTO;
 import ControlledMoney.api.domain.conta.service.ContaService;
 import ControlledMoney.api.repository.ContaRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -43,9 +44,8 @@ public class ContaController {
 
 
     @PostMapping
-    public void criarConta(@RequestBody @Valid ContaInputDTO dados){
-        var conta = new Conta(dados);
-        contaRepository.save(conta);
+    public void criarConta(HttpServletRequest request, @RequestBody @Valid ContaInputDTO dados){
+        contaService.criarConta(request ,dados);
     }
     
     @DeleteMapping("/{id}")

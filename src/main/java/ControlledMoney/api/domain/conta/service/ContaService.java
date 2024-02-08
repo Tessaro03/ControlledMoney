@@ -7,11 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ControlledMoney.api.domain.conta.Conta;
+import ControlledMoney.api.domain.conta.dtos.ContaInputDTO;
 import ControlledMoney.api.domain.conta.dtos.ContaOutputDTO;
+import ControlledMoney.api.domain.conta.validacao.ContaValidacao;
+import ControlledMoney.api.infra.token.TokenUsuario;
 import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
 import ControlledMoney.api.repository.LucroRepository;
 import ControlledMoney.api.repository.ParcelaRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -29,6 +33,11 @@ public class ContaService {
     @Autowired
     private ParcelaRepository parcelaRepository;
 
+    @Autowired
+    private ContaValidacao contaValidacao;
+
+    @Autowired
+    private TokenUsuario tokenUsuario;
 
     public ContaOutputDTO dadosConta(Long id, int mes, int ano) {
         if (mes == 0 || ano == 0) {
@@ -65,7 +74,13 @@ public class ContaService {
         contaRepository.deleteById(id);
     }
 
-    
+    @Transactional
+    public void criarConta(HttpServletRequest request, ContaInputDTO dados){
+        var usuario = tokenUsuario.usuarioToken(request);
+        contaValidacao.validarPost(usuario, dados);
+        var conta = new Conta(dados);
+        contaRepository.save(conta);
+    }
 
  
 }                                                                              
