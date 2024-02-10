@@ -38,8 +38,8 @@ public class LucroController {
     }
 
     @PatchMapping
-    public void alterarLucro(@RequestBody @Valid LucroAlterarDTO dados){
-        service.alterarLucro(dados);
+    public void alterarLucro(HttpServletRequest request, @RequestBody @Valid LucroAlterarDTO dados){
+        service.alterarLucro(request,dados);
     }
 
     @DeleteMapping("/{id}")

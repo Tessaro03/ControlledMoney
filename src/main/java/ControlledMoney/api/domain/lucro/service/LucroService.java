@@ -50,8 +50,10 @@ public class LucroService {
         lucroRepository.save(lucro);
     }
 
-    public void alterarLucro(LucroAlterarDTO dados) {
-        validador.validarPath(dados);
+    public void alterarLucro(HttpServletRequest request,LucroAlterarDTO dados) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
+        validador.validarPath(usuario,dados);
         var lucro = lucroRepository.getReferenceById(dados.idLucro());
         if (dados.valor() != null) {lucro.setValor(dados.valor());}
         if (dados.data() != null) { lucro.setData(dados.data());}
