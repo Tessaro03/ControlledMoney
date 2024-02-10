@@ -1,6 +1,8 @@
 package ControlledMoney.api.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,5 +26,8 @@ public interface LucroRepository extends JpaRepository<Lucro, Long>{
     @Modifying
     @Query("DELETE FROM Lucro l WHERE l.conta.id = :id")
     void deletarLucroIdConta(Long id);
+
+    @Query("SELECT l FROM Lucro l WHERE l.conta.usuario.id = :idUsuario")
+    List<Lucro> LucroPorIdUsuario(Long idUsuario);
 
 }

@@ -1,7 +1,5 @@
 package ControlledMoney.api.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ControlledMoney.api.domain.lucro.Lucro;
 import ControlledMoney.api.domain.lucro.dtos.LucroAlterarDTO;
 import ControlledMoney.api.domain.lucro.dtos.LucroInputDTO;
-import ControlledMoney.api.domain.lucro.dtos.LucroOutputDTO;
 import ControlledMoney.api.domain.lucro.service.LucroService;
-import ControlledMoney.api.domain.lucro.validacao.LucroValidador;
-import ControlledMoney.api.repository.LucroRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -27,32 +22,23 @@ import jakarta.validation.Valid;
 @RequestMapping("/lucro")
 public class LucroController {
     
-    @Autowired
-    private LucroRepository lucroRepository;
-
     @Autowired 
     private LucroService service;
 
-    @Autowired
-    private LucroValidador validador;
-
-
-
     @GetMapping
     @Transactional
-    public ResponseEntity listarGastos(){
-        List<Lucro> lucros = lucroRepository.findAll();
-        return ResponseEntity.ok(lucros.stream().map(LucroOutputDTO::new));
+    public ResponseEntity listarGastos(HttpServletRequest request){
+        var lucros = service.listarLucro(request);
+        return ResponseEntity.ok(lucros);
     }
 
     @PostMapping
-    public void CriarLucro(@RequestBody @Valid LucroInputDTO dados){
-        service.adicionarLucro(dados);
+    public void CriarLucro(HttpServletRequest request,@RequestBody @Valid LucroInputDTO dados){
+        service.adicionarLucro(request, dados);
     }
 
     @PatchMapping
     public void alterarLucro(@RequestBody @Valid LucroAlterarDTO dados){
-        validador.validarPath(dados);
         service.alterarLucro(dados);
     }
 
