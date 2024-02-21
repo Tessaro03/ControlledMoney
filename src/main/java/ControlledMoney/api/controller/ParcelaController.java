@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ControlledMoney.api.domain.parcela.dtos.ParcelaInputDTO;
 import ControlledMoney.api.domain.parcela.service.ParcelaService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/parcela")
@@ -19,17 +20,17 @@ public class ParcelaController {
     @Autowired 
     private ParcelaService parcelaService;
 
-    
+   
 
     @PostMapping
-    public void criarParcela(@RequestBody ParcelaInputDTO dados){
-        parcelaService.cirarParcela(dados);
+    public void criarParcela(HttpServletRequest request, @RequestBody ParcelaInputDTO dados){
+        parcelaService.criarParcela(request, dados);
     }
     
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletarParcela(@PathVariable Long id){
-        parcelaService.deletarParcela(id);
+    public ResponseEntity deletarParcela(HttpServletRequest request,@PathVariable Long id){
+        parcelaService.deletarParcela(request, id);
         return ResponseEntity.ok().build();
     }
 }
