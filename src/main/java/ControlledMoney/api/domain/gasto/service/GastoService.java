@@ -79,7 +79,10 @@ public class GastoService {
         gastoRepository.save(gasto);
     }
 
-    public void deletarGasto(Long id) {
+    public void deletarGasto(HttpServletRequest request, Long id) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
+        validador.validarDelete(id, usuario);
         var gasto = gastoRepository.getReferenceById(id);
         var conta = contaRepository.getReferenceById(gasto.getConta().getId());
 

@@ -1,6 +1,5 @@
 package ControlledMoney.api.controller;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ControlledMoney.api.domain.gasto.Gasto;
 import ControlledMoney.api.domain.gasto.dtos.GastoAlterarDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
-import ControlledMoney.api.domain.gasto.dtos.GastoOutputDTO;
 import ControlledMoney.api.domain.gasto.service.GastoService;
-import ControlledMoney.api.domain.gasto.validacao.GastoValidador;
-import ControlledMoney.api.repository.GastoRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
@@ -50,8 +45,8 @@ public class GastoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletarGasto(@PathVariable Long id){
-        gastoService.deletarGasto(id);
+    public ResponseEntity deletarGasto(HttpServletRequest request, @PathVariable Long id){
+        gastoService.deletarGasto(request, id);
         return ResponseEntity.ok().build();
     }
 }
