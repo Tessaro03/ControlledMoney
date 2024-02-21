@@ -43,8 +43,8 @@ public class LucroController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deletarLucro(@PathVariable Long id){
-        service.deletarLucro(id);
+    public ResponseEntity deletarLucro(HttpServletRequest request,@PathVariable Long id){
+        service.deletarLucro(request,id);
         return ResponseEntity.ok().build();
     }
 

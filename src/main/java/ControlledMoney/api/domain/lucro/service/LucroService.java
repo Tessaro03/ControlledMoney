@@ -70,7 +70,10 @@ public class LucroService {
         lucroRepository.save(lucro);
     }
 
-    public void deletarLucro(Long id) {
+    public void deletarLucro(HttpServletRequest request, Long id) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
+        
         var lucro = lucroRepository.getReferenceById(id);
         var conta = contaRepository.getReferenceById(lucro.getConta().getId());
         if (lucro.getRecebido()) {

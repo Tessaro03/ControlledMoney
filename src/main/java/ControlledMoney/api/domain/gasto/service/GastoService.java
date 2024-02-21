@@ -1,13 +1,21 @@
 package ControlledMoney.api.domain.gasto.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import ControlledMoney.api.domain.gasto.Gasto;
 import ControlledMoney.api.domain.gasto.dtos.GastoAlterarDTO;
 import ControlledMoney.api.domain.gasto.dtos.GastoInputDTO;
+import ControlledMoney.api.domain.gasto.dtos.GastoOutputDTO;
+import ControlledMoney.api.domain.gasto.validacao.GastoValidador;
+import ControlledMoney.api.infra.token.TokenUsuario;
 import ControlledMoney.api.repository.ContaRepository;
 import ControlledMoney.api.repository.GastoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class GastoService {
@@ -18,7 +26,23 @@ public class GastoService {
     @Autowired
     private ContaRepository contaRepository;
 
-    public void criarGasto(GastoInputDTO dados){
+    @Autowired
+    private TokenUsuario tokenUsuario;
+
+    @Autowired
+    private GastoValidador validador;
+
+
+    public List<GastoOutputDTO> listarGastos(HttpServletRequest request){
+        var usuario = tokenUsuario.usuarioToken(request);
+        List<Gasto> gastos = gastoRepository.gastoPorIdUsuario(usuario.getId());
+        return gastos.stream().map(GastoOutputDTO::new).collect(Collectors.toList());
+    }
+
+    public void criarGasto(HttpServletRequest request, GastoInputDTO dados){
+        var usuario = tokenUsuario.usuarioToken(request);
+        validador.validadorPost(usuario, dados);
+
         var conta = contaRepository.getReferenceById(dados.idConta());        
         var gasto = new Gasto(dados, conta);
         gastoRepository.save(gasto);
@@ -33,7 +57,10 @@ public class GastoService {
         }
     }
 
-    public void alterarGasto(GastoAlterarDTO dados) {
+    public void alterarGasto(HttpServletRequest request,GastoAlterarDTO dados) {
+        var usuario = tokenUsuario.usuarioToken(request);
+
+        validador.validadorPath(usuario, dados);
         var gasto = gastoRepository.getReferenceById(dados.idGasto());
 
         if (dados.valor() != null) {gasto.setValor(dados.valor());}

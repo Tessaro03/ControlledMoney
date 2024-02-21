@@ -20,41 +20,38 @@ import ControlledMoney.api.domain.gasto.dtos.GastoOutputDTO;
 import ControlledMoney.api.domain.gasto.service.GastoService;
 import ControlledMoney.api.domain.gasto.validacao.GastoValidador;
 import ControlledMoney.api.repository.GastoRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/gasto")
 public class GastoController {
     
-    @Autowired
-    private GastoRepository gastoRepository;
 
     @Autowired
     private GastoService gastoService;
 
-    @Autowired
-    private GastoValidador validador;
+
 
     @GetMapping
-    public ResponseEntity listarGastos(){
-        List<Gasto> gastos = gastoRepository.findAll();
-        return ResponseEntity.ok(gastos.stream().map(GastoOutputDTO::new));
+    public ResponseEntity listarGastos(HttpServletRequest request){
+          var gastos = gastoService.listarGastos(request);
+          return ResponseEntity.ok(gastos);
     }
-    
-   @PostMapping
-   public void criarGasto(@RequestBody @Valid GastoInputDTO dados){
-        gastoService.criarGasto(dados);
-   }
+      
+    @PostMapping
+    public void criarGasto(HttpServletRequest request,@RequestBody @Valid GastoInputDTO dados){
+          gastoService.criarGasto(request, dados);
+    }
 
-   @PatchMapping
-   public void alterarGasto(@RequestBody @Valid GastoAlterarDTO dados){
-     validador.validadorPath(dados);
-        gastoService.alterarGasto(dados);
-   }
+    @PatchMapping
+    public void alterarGasto(HttpServletRequest request,@RequestBody @Valid GastoAlterarDTO dados){
+        gastoService.alterarGasto(request, dados);
+    }
 
-   @DeleteMapping("/{id}")
-   public ResponseEntity deletarGasto(@PathVariable Long id){
-     gastoService.deletarGasto(id);
-     return ResponseEntity.ok().build();
-   }
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletarGasto(@PathVariable Long id){
+        gastoService.deletarGasto(id);
+        return ResponseEntity.ok().build();
+    }
 }

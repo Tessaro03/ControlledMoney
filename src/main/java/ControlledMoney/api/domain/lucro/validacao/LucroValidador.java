@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import ControlledMoney.api.domain.lucro.dtos.LucroAlterarDTO;
 import ControlledMoney.api.domain.lucro.dtos.LucroInputDTO;
+import ControlledMoney.api.domain.lucro.validacao.validacaoDelete.LucroValidadorDeleteUsuario;
 import ControlledMoney.api.domain.lucro.validacao.validacaoPatch.LucroValidadorPatch;
 import ControlledMoney.api.domain.lucro.validacao.validacaoPatch.LucroValidadorPatchUsuario;
-import ControlledMoney.api.domain.lucro.validacao.validacaoPost.LucroValidadorPost;
+import ControlledMoney.api.domain.lucro.validacao.validacaoPost.LucroValidadorPostUsuario;
 import ControlledMoney.api.domain.usuario.Usuario;
 
 @Service
@@ -22,7 +23,10 @@ public class LucroValidador {
     private List<LucroValidadorPatchUsuario> validadorPatchUsuario;
 
     @Autowired
-    private List<LucroValidadorPost> validadorPost;
+    private List<LucroValidadorPostUsuario> validadorPost;
+
+    @Autowired
+    private List<LucroValidadorDeleteUsuario> validarDeleteUsuario;
 
     public void validarPath(Usuario usuario, LucroAlterarDTO dados){
         validadorPatchUsuario.forEach(v -> v.validar(usuario,dados));
@@ -31,5 +35,9 @@ public class LucroValidador {
 
     public void validarPost(Usuario usuario, LucroInputDTO dados){
         validadorPost.forEach(v -> v.validar(usuario, dados));
+    }
+
+    public void validarDelete(Usuario usuario, Long id){
+        validarDeleteUsuario.forEach( v -> v.validar(id, usuario));
     }
 }

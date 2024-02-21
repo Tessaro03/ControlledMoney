@@ -9,7 +9,7 @@ import ControlledMoney.api.infra.Exceptions.ValidacaoException;
 import ControlledMoney.api.repository.ContaRepository;
 
 @Service
-public class ValidarLucroAdicionadoNaPropriaConta implements LucroValidadorPost{
+public class ValidarLucroAdicionadoNaPropriaConta implements LucroValidadorPostUsuario{
 
     @Autowired
     private ContaRepository contaRepository;
